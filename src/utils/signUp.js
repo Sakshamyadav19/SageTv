@@ -1,16 +1,22 @@
-import { createUserWithEmailAndPassword } from "firebase/auth";
+import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
 import { auth } from "../firebaseConfig";
 
-const signUp = (email, password,setErrMsg) => {
+const signUp = (email, password, name, navigate, setErrMsg) => {
   createUserWithEmailAndPassword(auth, email, password)
     .then((userCredential) => {
       // Signed up
       const user = userCredential.user;
+      updateProfile(user, {
+        displayName: name,
+      })
+        .then(() => {
+          navigate("/browse");
+        })
+        .catch((error) => {});
     })
     .catch((error) => {
-      const errorMessage = error.message;
-      setErrMsg("User Already Exists!")
-
+      console.log(error);
+      setErrMsg("User Already Exists!");
     });
 };
 

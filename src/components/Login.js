@@ -3,8 +3,10 @@ import Header from "./Header";
 import { validate } from "../utils/validate";
 import signUp from "../utils/signUp";
 import signIn from "../utils/signIn";
+import { useNavigate } from "react-router-dom";
 
 const Login = () => {
+  const navigate=useNavigate()
   const [isSignIn, setIsSignIn] = useState(true);
   const [errMsg, setErrMsg] = useState(null);
   const name = useRef(null);
@@ -13,16 +15,14 @@ const Login = () => {
 
   const submitForm = () => {
     const isvalidated = validate(email.current.value, password.current.value);
-    if (isvalidated != null) {
-      setErrMsg(isvalidated);
-    } else {
-      setErrMsg(null);
-      if(!isSignIn){
-        signUp(email.current.value, password.current.value,(msg)=>setErrMsg(msg))
-      }
-      else{
-        signIn(email.current.value, password.current.value,(msg)=>setErrMsg(msg))
-      }
+    setErrMsg(isvalidated)
+    if (isvalidated != null) return;
+
+    if(!isSignIn){
+      signUp(email.current.value, password.current.value,name.current.value,navigate,(msg)=>setErrMsg(msg))
+    }
+    else{
+      signIn(email.current.value, password.current.value,navigate,(msg)=>setErrMsg(msg))
     }
   };
 
