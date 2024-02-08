@@ -4,6 +4,7 @@ import { validate } from "../utils/validate";
 import signUp from "../utils/signUp";
 import signIn from "../utils/signIn";
 import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
 
 const Login = () => {
   const navigate=useNavigate()
@@ -12,6 +13,7 @@ const Login = () => {
   const name = useRef(null);
   const email = useRef(null);
   const password = useRef(null);
+  const dispatch=useDispatch()
 
   const submitForm = () => {
     const isvalidated = validate(email.current.value, password.current.value);
@@ -19,7 +21,7 @@ const Login = () => {
     if (isvalidated != null) return;
 
     if(!isSignIn){
-      signUp(email.current.value, password.current.value,name.current.value,navigate,(msg)=>setErrMsg(msg))
+      signUp(email.current.value, password.current.value,name.current.value,navigate,dispatch,(msg)=>setErrMsg(msg))
     }
     else{
       signIn(email.current.value, password.current.value,navigate,(msg)=>setErrMsg(msg))
