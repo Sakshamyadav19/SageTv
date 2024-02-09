@@ -3,11 +3,10 @@ import Header from "./Header";
 import { validate } from "../utils/validate";
 import signUp from "../utils/signUp";
 import signIn from "../utils/signIn";
-import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
+import { Login_bg } from "../utils/constants";
 
 const Login = () => {
-  const navigate=useNavigate()
   const [isSignIn, setIsSignIn] = useState(true);
   const [errMsg, setErrMsg] = useState(null);
   const name = useRef(null);
@@ -21,10 +20,10 @@ const Login = () => {
     if (isvalidated != null) return;
 
     if(!isSignIn){
-      signUp(email.current.value, password.current.value,name.current.value,navigate,dispatch,(msg)=>setErrMsg(msg))
+      signUp(email.current.value, password.current.value,name.current.value,dispatch,(msg)=>setErrMsg(msg))
     }
     else{
-      signIn(email.current.value, password.current.value,navigate,(msg)=>setErrMsg(msg))
+      signIn(email.current.value, password.current.value,(msg)=>setErrMsg(msg))
     }
   };
 
@@ -34,7 +33,7 @@ const Login = () => {
       <div className="absolute">
         <img
           alt="bg-img"
-          src="https://assets.nflxext.com/ffe/siteui/vlv3/4da5d2b1-1b22-498d-90c0-4d86701dffcc/98a1cb1e-5a1d-4b98-a46f-995272b632dd/IN-en-20240129-popsignuptwoweeks-perspective_alpha_website_small.jpg"
+          src={Login_bg}
         ></img>
       </div>
       <form
